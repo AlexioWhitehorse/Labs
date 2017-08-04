@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <title>Lab Schedule</title>
+    <meta name="description" content="Lab Schedule">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+    <script src="scripts/path.js"></script>
+    <link href="css/style.css" type="text/css" rel="stylesheet"/>
+
+</head>
+<body>
+    <div id="wrapper">
+        
+        <div id="tabs" data-value="1"></div>
+        <div id="status"></div>
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <h2>Input</h2>
+                    <table class='table table-hover'>
+                        <tbody>
+                            <div class='row'>
+                                <div class='col-sm-2'>
+                                    <button id="deleteBtn">Reset</button>
+                                </div>
+                            </div>
+                            <div id="inputDisplay"></div>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-6 col-md-6" style="position: fixed;left: 50%;">
+                    <h2>Output</h2>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <h3>Quarter I</h3>
+                            <div id='Q1'></div>
+                        </div>
+                        <div class="col-sm-2">
+                            <h3>Quarter II</h3>
+                            <div id='Q2'></div>
+                        </div>
+                        <div class="col-sm-2">
+                            <h3>Quarter III</h3>
+                            <div id='Q3'></div>
+                        </div>
+                        <div class="col-sm-2">
+                            <h3>Quarter IV</h3>
+                            <div id='Q4'></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
