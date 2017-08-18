@@ -39,7 +39,7 @@ function copyBox(name, labs, quarter){
     }else if(quarter === 4){
         copy4 = copy4.concat("\n\nDX:: ",name,"\n",labs);
     }
-
+    var hi ="";
     copyText = copy1.concat(copy2,copy3,copy4);
     return copyText;
 }
