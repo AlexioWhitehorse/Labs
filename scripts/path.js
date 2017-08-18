@@ -1,11 +1,11 @@
 $(document).ready(function () {
     var $div, tab1, tab2, tab3, tab, macLocal, winLocal, path;
     
-    macLocal = false;
+    macLocal = true;
     winLocal = false;
     
     if(macLocal){
-        path = "file:///Applications/Brackets.app/Contents/samples/root/Labs/";
+        path = "file:///Users/Alex/Documents/Programs/git/Labs/";
     }else if(winLocal){
         path = "file:///C:/Users/Alex/Documents/Programs/Labs/";
     }else{

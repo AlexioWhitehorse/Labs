@@ -12,12 +12,36 @@ $(document).ready(function () {
 
 function resetPage(){
     $('[data-toggle="buttons"] :radio').prop('checked', false);
-        $('[data-toggle="buttons"] label').removeClass('active');
-        $('[data-toggle="buttons"] label:has(input:radio[name="no"])').addClass('active');
-        $('#Q1').empty();
-        $('#Q2').empty();
-        $('#Q3').empty();
-        $('#Q4').empty();
+    $('[data-toggle="buttons"] label').removeClass('active');
+    $('[data-toggle="buttons"] label:has(input:radio[name="no"])').addClass('active');
+    $('#Q1').empty();
+    $('#Q2').empty();
+    $('#Q3').empty();
+    $('#Q4').empty();
+    $("#copybox").val("");
+}
+
+var copy1 = "\n111111111111111111111111111111\n\nQUARTER 1";
+var copy2 = "\n\n\n2222222222222222222222222222222\n\nQUARTER 2"; 
+var copy3 = "\n\n\n3333333333333333333333333333333\n\nQUARTER 3";
+var copy4 = "\n\n\n44444444444444444444444444444444\n\nQUARTER 4";
+
+function copyBox(name, labs, quarter){
+    var copyText = "";
+    if(quarter === 1){
+        copy1 = copy1.concat("\n\nDX:: ",name,"\n",labs);
+        copy2 = copy2.concat("\n\nDX:: ",name,"\n",labs);
+        copy3 = copy3.concat("\n\nDX:: ",name,"\n",labs);
+        copy4 = copy4.concat("\n\nDX:: ",name);
+    }else if(quarter === 2){
+        copy2 = copy2.concat("\n\nDX:: ",name,"\n",labs);
+        copy4 = copy4.concat("\n\nDX:: ",name,"\n",labs);
+    }else if(quarter === 4){
+        copy4 = copy4.concat("\n\nDX:: ",name,"\n",labs);
+    }
+
+    copyText = copy1.concat(copy2,copy3,copy4);
+    return copyText;
 }
 
 function outputChart(){
@@ -32,13 +56,18 @@ function outputChart(){
     var code = lab[0].code;
     var quarter = lab[0].quarters;
     var labs = lab[0].labs;
+    labs = labs.toString();
+    labs = labs.replace(",",", ");
+    var copy = $("#copybox").val();
+
     
     console.log(name + "\n");
     console.log(code + "\n");
     console.log(quarter + "\n");
     console.log(labs + "\n");
     
-    if(quarter === 1){
+    $("#copybox").val(copyBox(name, labs, quarter));
+    if(quarter === 1){  
         $("#Q1").append("<p id="+code+">"+labs+"</p>");
         $("#Q2").append("<p id="+code+">"+labs+"</p>");
         $("#Q3").append("<p id="+code+">"+labs+"</p>");
@@ -51,6 +80,7 @@ function outputChart(){
     }else{
         $("#status").append("<p>Something unexpected happened.</p>")
     }
+    //$("#copybox").val(copy+" "+name);
 }
 
 function displayInputs(){
@@ -124,6 +154,11 @@ var data = {
         code: "I50.32",
         quarters: 4,
         labs: [ "BNP" ]
+    },{
+        name: "Chronic Kidney Disease",
+        code: "0",
+        quarters: 1,
+        labs: [ "?" ]
     },  {
         name: "Diabetes Type 1",
         code: "0",

@@ -12,6 +12,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     
     <script src="scripts/path.js"></script>
+    <script src="scripts/myscript.js"></script>
+    <script src="scripts/clipboard.js"></script>
     <link href="css/style.css" type="text/css" rel="stylesheet"/>
 
 </head>
@@ -20,7 +22,7 @@
         
         <div id="tabs" data-value="1"></div>
         <div id="status"></div>
-        
+
         <div class="container">
             <div class="row">
                 <div class="col-sm-6 col-md-6">
@@ -38,6 +40,10 @@
                 </div>
                 <div class="col-sm-6 col-md-6" style="position: fixed;left: 50%;">
                     <h2>Output</h2>
+
+                    <textarea id="copybox" style="width:501px;height:106px;"></textarea>
+                    <button data-copytarget="#copybox">copy</button>
+
                     <div class="row">
                         <div class="col-sm-2">
                             <h3>Quarter I</h3>
