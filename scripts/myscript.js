@@ -1,14 +1,52 @@
 /*global $ */
 /*jslint browser: true*/
 
-$(document).ready(function () {
+$(document).ready(function (){
     displayInputs();
     displayAll();
-    $('.yes').change(outputChart);
-    
+
+
+    $('.yes').change(output);
     $('.no').change(resetPage);
     $('#deleteBtn').on('click', resetPage);
 });
+
+function output(){
+    var diagnosisCode = $(this).val();
+    
+    var lab = data.diagnosis.filter(function(obj) {
+        return obj.code === diagnosisCode;
+    });
+    
+    var name = lab[0].name;
+    var code = lab[0].code;
+    var quarter = lab[0].quarters;
+    var labs = lab[0].labs.toString().replace(",",", ");
+
+    console.log(name + "\n");
+    console.log(code + "\n");
+    console.log(quarter + "\n");
+    console.log(labs + "\n");
+
+
+    if(name === "Diabetes"){
+        // button2 = type2 < || > @ hemoglobin A1c (HgbA1c) 7.0
+        $(this).val("hi");
+        console.log($(this).val());
+
+        var $div = $(this).parent().parent().parent();
+        $div.empty();
+        for(var i = 0; i < dataCKD.diagnosis.length; i++){
+            $div.append("<p>"+i+"</p>");
+        }
+    }else if(name==="Chronic Kidney Disease"){
+        var $div = $(this).parent().parent().parent();
+        $div.empty();
+    }
+
+    $("#copybox").val(copyBox(name,labs,quarter));
+    outputChart(code,labs,quarter);
+}
 
 function resetPage(){
     $('[data-toggle="buttons"] :radio').prop('checked', false);
@@ -21,13 +59,7 @@ function resetPage(){
     $("#copybox").val("");
 }
 
-var copy1 = "\n111111111111111111111111111111\n\nQUARTER 1";
-var copy2 = "\n\n\n2222222222222222222222222222222\n\nQUARTER 2"; 
-var copy3 = "\n\n\n3333333333333333333333333333333\n\nQUARTER 3";
-var copy4 = "\n\n\n44444444444444444444444444444444\n\nQUARTER 4";
-
 function copyBox(name, labs, quarter){
-    var copyText = "";
     if(quarter === 1){
         copy1 = copy1.concat("\n\nDX:: ",name,"\n",labs);
         copy2 = copy2.concat("\n\nDX:: ",name,"\n",labs);
@@ -39,34 +71,11 @@ function copyBox(name, labs, quarter){
     }else if(quarter === 4){
         copy4 = copy4.concat("\n\nDX:: ",name,"\n",labs);
     }
-    var hi ="";
-    copyText = copy1.concat(copy2,copy3,copy4);
+    var copyText = copy1.concat(copy2,copy3,copy4);
     return copyText;
 }
 
-function outputChart(){
-    var diagnosisCode = $(this).val();
-    
-    var lab = data.diagnosis.filter(function(obj) {
-        return obj.code === diagnosisCode;
-    });
-    
-    var $div;
-    var name = lab[0].name;
-    var code = lab[0].code;
-    var quarter = lab[0].quarters;
-    var labs = lab[0].labs;
-    labs = labs.toString();
-    labs = labs.replace(",",", ");
-    var copy = $("#copybox").val();
-
-    
-    console.log(name + "\n");
-    console.log(code + "\n");
-    console.log(quarter + "\n");
-    console.log(labs + "\n");
-    
-    $("#copybox").val(copyBox(name, labs, quarter));
+function outputChart(code, labs, quarter){
     if(quarter === 1){  
         $("#Q1").append("<p id="+code+">"+labs+"</p>");
         $("#Q2").append("<p id="+code+">"+labs+"</p>");
@@ -80,7 +89,6 @@ function outputChart(){
     }else{
         $("#status").append("<p>Something unexpected happened.</p>")
     }
-    //$("#copybox").val(copy+" "+name);
 }
 
 function displayInputs(){
@@ -95,13 +103,13 @@ function displayInputs(){
                 "<div class='col-sm-4 col-md-4'>" +
                     "<div class='btn-group' class='no' data-toggle='buttons'>" +
                         "<label class='btn btn-success btn-lg active'>" +
-                            "<input type='radio' class='no' name='no' autocomplete='off' value=" +
+                            "<input type='radio' class='no' name='no' autocomplete='off' value='" +
                             data.diagnosis[i].code +
-                            " checked='checked'>No" +
+                            "' checked='checked'>No" +
                         "</label>" +
                         "<label class='btn btn-success btn-lg' class='yes'>" +
-                            "<input type='radio' class='yes' name='yes' autocomplete='off' value=" + data.diagnosis[i].code + 
-                            " checked='checked'>Yes" +
+                            "<input type='radio' class='yes' name='yes' autocomplete='off' value='" + data.diagnosis[i].code + 
+                            "' checked='checked'>Yes" +
                         "</label>" +
                     "</div>" +
                 "</div>" +
@@ -109,7 +117,7 @@ function displayInputs(){
     }
 }
 
-function displayAll() {
+function displayAll(){
     var $div;
     for(var i = 0; i < data.diagnosis.length; i++) {
         $div = $(
@@ -141,6 +149,11 @@ function toRoman(num){
     return str;
 }
 
+var copy1 = "\n111111111111111111111111111111\n\nQUARTER 1";
+var copy2 = "\n\n\n2222222222222222222222222222222\n\nQUARTER 2"; 
+var copy3 = "\n\n\n3333333333333333333333333333333\n\nQUARTER 3";
+var copy4 = "\n\n\n44444444444444444444444444444444\n\nQUARTER 4";
+
 //diagnosis
 var data = {
     diagnosis: [ {
@@ -160,19 +173,9 @@ var data = {
         quarters: 1,
         labs: [ "?" ]
     },  {
-        name: "Diabetes Type 1",
-        code: "0",
+        name: "Diabetes",
+        code: "11",
         quarters: 1,
-        labs: [ "HgbA1c" ]
-    },  {
-        name: "Diabetes Type 2",
-        code: "E11.21",
-        quarters: 1,
-        labs: [ "HgbA1c" ]
-    },  {
-        name: "Diabetes Type 2",
-        code: "E11.9",
-        quarters: 2,
         labs: [ "HgbA1c" ]
     },  {
         name: "Diuretic Therapy",
@@ -209,5 +212,60 @@ var data = {
         code: "0",
         quarters: 4,
         labs: [ "Vitamin D" ]
+    }]
+};
+
+//diagnosis
+var data2 = {
+    diagnosis: [ {
+        name: "Congestive Heart Failure",
+        code: "I50.32",
+        quarters: 4,
+        labs: [ "BNP" ]
+    },  {
+        name: "Chronic Kidney Disease",
+        code: "0",
+        quarters: 1,
+        labs: [ "?" ]
+    },  {
+        name: "Diabetes Type 1",
+        code: "0",
+        quarters: 1,
+        labs: [ "HgbA1c" ]
+    },  {
+        name: "Diabetes Type 2",
+        code: "E11.21",
+        quarters: 1,
+        labs: [ "HgbA1c" ]
+    },  {
+        name: "Diabetes Type 2",
+        code: "E11.9",
+        quarters: 2,
+        labs: [ "HgbA1c" ]
+    }]
+};
+
+//diagnosis
+var dataCKD = {
+    diagnosis: [ {
+        name: "Chronic Kidney Disease1",
+        code: "0",
+        quarters: 1,
+        labs: [ "?" ]
+    },  {
+        name: "Chronic Kidney Disease2",
+        code: "0",
+        quarters: 1,
+        labs: [ "HgbA1c" ]
+    },  {
+        name: "Chronic Kidney Disease3",
+        code: "E11.21",
+        quarters: 1,
+        labs: [ "HgbA1c" ]
+    },  {
+        name: "Chronic Kidney Disease4",
+        code: "E11.9",
+        quarters: 2,
+        labs: [ "HgbA1c" ]
     }]
 };
